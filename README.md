@@ -9,6 +9,22 @@ You can refer to the guide of ANTLR to install the antlr software(https://github
 
 If you change the J.g4 to match your own lanuage grammar, please use gen.sh to generate the language code runtime. When you change the source code, you can use all.sh to generate the language code and compile them and do testing. If you only want to do some test, use the run.sh is a short way.
 
+# Examples
+You can examples at the test folder, all files with the subfix of '.jay'. Then fllowing is an example from test.jay
+
+program Fib
+
+function f(x) as int
+  
+  if x <= 1 then
+    return x
+  end if
+  
+  return f(x - 1) + f(x - 2) 
+end function
+
+write("The 6th term of the Fibonacci sequence is: ", f(6))
+
 # Currently, the function should declare first then call it, I will add check stage before execute the program.
 
 The init commit is my 3 days work, enjoys it.
