@@ -11,7 +11,7 @@ If you change the J.g4 to match your own lanuage grammar, please use gen.sh to g
 
 # Examples
 You can examples at the test folder, all files with the subfix of '.jay'. Then fllowing is an example from test.jay
-<code>
+```
 program Fib
 
 function f(x) as int
@@ -24,7 +24,7 @@ function f(x) as int
 end function
 
 write("The 6th term of the Fibonacci sequence is: ", f(6))
-</code>
+```
 # Currently, the function should declare first then call it, I will add check stage before execute the program.
 
 The init commit is my 3 days work, enjoys it.
