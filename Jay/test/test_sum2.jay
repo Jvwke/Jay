@@ -1,0 +1,26 @@
+program Sum2
+
+function min(x, y) as int
+  if x < y then
+      return x
+  else
+      return y
+  end if
+end function
+
+function max(x, y) as int
+  if x > y then
+      return x
+  else
+      return y
+  end if
+end function
+
+function sum(x, y) as int
+  return x + y
+end function
+
+int min1 = min(1,2)
+int max1 = max(3,4)
+int sum1 = sum(min1,max1)
+write("sum of min(1,2) + max(3,4) = ", sum1)

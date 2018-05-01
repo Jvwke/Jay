@@ -1,0 +1,14 @@
+program Compare
+
+function compare(x, y) as int
+  if x > y then
+    return 1
+  else if x < y then
+    return -1
+  else
+    return 0 
+  end if
+end function
+
+int cmp = compare(1,2)
+write("compare of 1 to 2 = ", cmp)

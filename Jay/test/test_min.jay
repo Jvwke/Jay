@@ -1,0 +1,17 @@
+program Min 
+
+function min2(x, y) as int
+  if x < y then
+      return x
+  else
+      return y
+  end if
+end function
+
+function min3(x, y, z) as int
+  int m = min2(x,y)
+  int n = min2(m,z)
+  return n
+end function
+
+write ("min(3,2,1) = ", min3(3,2,1))

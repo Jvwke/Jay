@@ -1,0 +1,13 @@
+program Array
+
+int[] a = (3,4,5)
+
+write("a=", a)
+write("a[2]=", a[2])
+
+int[] b
+b[0]=7
+b[1]=8
+b[2]=9
+write("b=", b)
+write("b[2]=", b[2])

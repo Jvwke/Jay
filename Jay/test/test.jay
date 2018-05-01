@@ -1,0 +1,12 @@
+program Fib
+
+function f(x) as int
+  
+  if x <= 1 then
+    return x
+  end if
+  
+  return f(x - 1) + f(x - 2) 
+end function
+
+write("The 6th term of the Fibonacci sequence is: ", f(6))
