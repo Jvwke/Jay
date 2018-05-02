@@ -34,4 +34,4 @@ write("")
 write("import test.jay as a library")
 write("The 2th term of the Fibonacci sequence is: ", f(2))
 ```
-The import only scan the function from imported file, omit all global variables defined in imported file, please pay attention to avoid some mistakes.
+The import only scan the function from imported file, omit all global variables defined in imported file, please pay attention to avoid some mistakes, if the function need visist the variable, you can redefined it in you current file.
