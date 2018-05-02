@@ -1,7 +1,7 @@
 package com.jay.type;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -22,7 +22,7 @@ public class JFunction {
         this.statements = statements;
     }
 
-    public JValue invoke(JScope scope, HashMap<String, JFunction> functions, List<JValue> paramValues) {
+    public JValue invoke(JScope scope, Map<String, JFunction> functions, List<JValue> paramValues) {
         scope = new JScope(scope);
         JRunVisitor visitor = new JRunVisitor(scope, functions);
 

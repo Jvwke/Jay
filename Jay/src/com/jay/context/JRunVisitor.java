@@ -1,19 +1,17 @@
 package com.jay.context;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.TerminalNode;
 
 import com.jay.exception.JException;
 import com.jay.lang.JBaseVisitor;
 import com.jay.lang.JParser;
 import com.jay.lang.JParser.ExpressionContext;
 import com.jay.lang.JParser.Expression_listContext;
-import com.jay.lang.JParser.Statement_listContext;
 import com.jay.type.JArray;
 import com.jay.type.JBool;
 import com.jay.type.JCompare;
@@ -28,13 +26,17 @@ import com.jay.type.JValue;
 
 public class JRunVisitor extends JBaseVisitor<JValue> {
     private JScope scope;
-    private HashMap<String, JFunction> functions;
+    private Map<String, JFunction> functions;
 
     public JRunVisitor() {
         this(new JScope(), new HashMap<>());
     }
 
-    public JRunVisitor(JScope scope, HashMap<String, JFunction> functions) {
+    public JRunVisitor(Map<String, JFunction> functions) {
+        this(new JScope(), functions);
+    }
+    
+    public JRunVisitor(JScope scope, Map<String, JFunction> functions) {
         this.scope = scope;
         this.functions = functions;
     }
@@ -51,12 +53,12 @@ public class JRunVisitor extends JBaseVisitor<JValue> {
 
     @Override
     public JValue visitFunction(JParser.FunctionContext ctx) {
-        List<TerminalNode> parameters = ctx.id_list() != null ? ctx.id_list().ID() : Collections.emptyList();
-        Statement_listContext statements = ctx.statement_list();
-        String fId = ctx.name.getText(), id = fId + "@" + parameters.size(),
-                t = ctx.r == null ? "nil" : ctx.r.getText();
-
-        functions.put(id, new JFunction(JType.find(t), parameters, statements));
+//        List<TerminalNode> parameters = ctx.id_list() != null ? ctx.id_list().ID() : Collections.emptyList();
+//        Statement_listContext statements = ctx.statement_list();
+//        String fId = ctx.name.getText(), id = fId + "@" + parameters.size(),
+//                t = ctx.r == null ? "nil" : ctx.r.getText();
+//
+//        functions.put(id, new JFunction(JType.find(t), parameters, statements));
         return null;
     }
 

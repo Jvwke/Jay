@@ -6,7 +6,10 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
+import com.jay.context.JDefListener;
 import com.jay.context.JRunVisitor;
 import com.jay.lang.JLexer;
 import com.jay.lang.JParser;
@@ -41,8 +44,14 @@ public class Jay {
         TokenStream tokens = new CommonTokenStream(lexer);
 
         JParser parser = new JParser(tokens);
-        JRunVisitor visitor = new JRunVisitor();
-
-        visitor.visit(parser.program());
+        parser.setBuildParseTree(true);
+        ParseTree tree = parser.program();
+        
+        ParseTreeWalker walker = new ParseTreeWalker();
+        JDefListener def = new JDefListener();
+        walker.walk(def, tree);
+        
+        JRunVisitor visitor = new JRunVisitor(def.getFunctions());
+        visitor.visit(tree);
     }
 }
