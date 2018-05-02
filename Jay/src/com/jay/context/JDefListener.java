@@ -17,7 +17,7 @@ import com.jay.type.JType;
 
 public class JDefListener extends JBaseListener {
 
-    private Map<String, JFunction> functions= new HashMap<>();
+    private Map<String, JFunction> functions = new HashMap<>();
 
     public void enterFunction(JParser.FunctionContext ctx) {
         List<TerminalNode> parameters = ctx.id_list() != null ? ctx.id_list().ID() : Collections.emptyList();
@@ -31,9 +31,12 @@ public class JDefListener extends JBaseListener {
     @Override
     public void enterImports(ImportsContext ctx) {
         String fileName = ctx.file.getText();
-        fileName = fileName.substring(1, fileName.length() - 1);// trim left and right " or '
-        functions.putAll(Jay.loadProgram(fileName));
-        super.enterImports(ctx);
+        // trim left and right " or '
+        fileName = fileName.substring(1, fileName.length() - 1);
+        Map<String, JFunction> funcs = Jay.loadProgram(fileName);
+        if (funcs != null) {
+            functions.putAll(funcs);
+        }
     }
 
     public Map<String, JFunction> getFunctions() {
