@@ -15,7 +15,6 @@ You can examples at the test folder, all files with the subfix of '.jay'. The fo
 program Fib
 
 function f(x) as int
-  
   if x <= 1 then
     return x
   end if
@@ -25,9 +24,14 @@ end function
 
 write("The 6th term of the Fibonacci sequence is: ", f(6))
 ```
-# Currently, the function should declare first then call it, I will add check stage before execute the program.
+You can also use test.jay as a library, and call the function in test_imports.jay
+```
+program Imports
 
-The init commit is my 3 days work, enjoys it.
+import "/home/j3z/git/Jay/Jay/test/test.jay"
 
-                                                                       Jay at ShangHai, China
-                                                                                   2018.05.01 
+write("")
+write("import test.jay as a library")
+write("The 2th term of the Fibonacci sequence is: ", f(2))
+```
+The import only scan the function from imported file, omit all global variables defined in imported file, please pay attention to avoid some mistakes.
