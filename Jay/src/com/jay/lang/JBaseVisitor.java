@@ -25,6 +25,13 @@ public class JBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements JVis
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
+    @Override public T visitImports(JParser.ImportsContext ctx) { return visitChildren(ctx); }
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.</p>
+     */
     @Override public T visitFunction_list(JParser.Function_listContext ctx) { return visitChildren(ctx); }
     /**
      * {@inheritDoc}

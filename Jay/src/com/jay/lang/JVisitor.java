@@ -18,6 +18,12 @@ public interface JVisitor<T> extends ParseTreeVisitor<T> {
      */
     T visitProgram(JParser.ProgramContext ctx);
     /**
+     * Visit a parse tree produced by {@link JParser#imports}.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitImports(JParser.ImportsContext ctx);
+    /**
      * Visit a parse tree produced by {@link JParser#function_list}.
      * @param ctx the parse tree
      * @return the visitor result

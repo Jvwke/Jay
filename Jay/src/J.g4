@@ -24,6 +24,7 @@ WRITE       : 'write'           ;
 READ        : 'read'            ;
 TYPEOF      : 'typeof'          ;
 DYNAMIC     : 'dynamic'         ;
+IMPORT      : 'import'          ;
 
 CONST_TYPE 
     : 'array' 
@@ -48,8 +49,11 @@ COMPARE_OP
     ;
 
 program
-    : (PROGRAM ID)? (function | statement)+
+    : (PROGRAM ID)? (imports)* (function | statement)+
     ;
+
+imports
+    : IMPORT file = CONST_STRING;
 
 function_list
     : function+
