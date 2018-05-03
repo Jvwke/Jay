@@ -7,4 +7,4 @@ echo 'build source'
 
 echo '========================================='
 echo 'test'
-. ./run.sh
+. ./test.sh

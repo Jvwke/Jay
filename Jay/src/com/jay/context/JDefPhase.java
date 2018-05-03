@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import com.jay.Jay;
@@ -16,6 +17,13 @@ import com.jay.type.JFunction;
 import com.jay.type.JType;
 
 public class JDefPhase extends JBaseListener {
+    
+    private ParseTree tree;
+    
+    public JDefPhase(ParseTree tree) {
+        super();
+        this.tree = tree;
+    }
 
     private Map<String, JFunction> functions = new HashMap<>();
 
@@ -41,5 +49,9 @@ public class JDefPhase extends JBaseListener {
 
     public Map<String, JFunction> getFunctions() {
         return functions;
+    }
+
+    public ParseTree getTree() {
+        return tree;
     }
 }

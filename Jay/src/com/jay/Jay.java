@@ -11,6 +11,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import com.jay.context.JDefPhase;
+import com.jay.context.JErrorListener;
 import com.jay.context.JRunPhase;
 import com.jay.lang.JLexer;
 import com.jay.lang.JParser;
@@ -48,21 +49,11 @@ public class Jay {
     }
 
     public static Map<String, JFunction> runProgram(CharStream input) {
-        JLexer lexer = new JLexer(input);
-        TokenStream tokens = new CommonTokenStream(lexer);
-
-        JParser parser = new JParser(tokens);
-        parser.setBuildParseTree(true);
-        ParseTree tree = parser.program();
-
-        // scan whole file to find all declared functions
-        ParseTreeWalker walker = new ParseTreeWalker();
-        JDefPhase def = new JDefPhase();
-        walker.walk(def, tree);
+        JDefPhase def = loadProgram(input);
 
         // run the program
         JRunPhase run = new JRunPhase(def.getFunctions());
-        run.visit(tree);
+        run.visit(def.getTree());
 
         return def.getFunctions();
     }
@@ -86,11 +77,13 @@ public class Jay {
 
         JParser parser = new JParser(tokens);
         parser.setBuildParseTree(true);
+        parser.removeErrorListeners(); // remove ConsoleErrorListener
+        parser.addErrorListener(new JErrorListener());
         ParseTree tree = parser.program();
 
         // scan whole file to find all declared functions
         ParseTreeWalker walker = new ParseTreeWalker();
-        JDefPhase def = new JDefPhase();
+        JDefPhase def = new JDefPhase(tree);
         walker.walk(def, tree);
 
         return def;
