@@ -12,9 +12,13 @@ import com.jay.lang.JBaseVisitor;
 import com.jay.lang.JParser;
 import com.jay.lang.JParser.ExpressionContext;
 import com.jay.lang.JParser.Expression_listContext;
+import com.jay.lang.JParser.StatementBreakContext;
+import com.jay.lang.JParser.StatementContinueContext;
 import com.jay.type.JArray;
 import com.jay.type.JBool;
+import com.jay.type.JBreak;
 import com.jay.type.JCompare;
+import com.jay.type.JContinue;
 import com.jay.type.JFloat;
 import com.jay.type.JFunction;
 import com.jay.type.JInteger;
@@ -35,7 +39,7 @@ public class JRunPhase extends JBaseVisitor<JValue> {
     public JRunPhase(Map<String, JFunction> functions) {
         this(new JScope(), functions);
     }
-    
+
     public JRunPhase(JScope scope, Map<String, JFunction> functions) {
         this.scope = scope;
         this.functions = functions;
@@ -122,8 +126,15 @@ public class JRunPhase extends JBaseVisitor<JValue> {
     public JValue visitStatementWhile(JParser.StatementWhileContext ctx) {
         while (((JBool) visit(ctx.or_expression())).getValue()) {
             scope = new JScope(scope);
-            visit(ctx.statement_list());
-            scope = scope.getParent();
+            try {
+                visit(ctx.statement_list());
+            } catch (JBreak br) {
+                break;
+            } catch (JContinue con) {
+                continue;
+            } finally {
+                scope = scope.getParent();
+            }
         }
 
         return null;
@@ -134,9 +145,9 @@ public class JRunPhase extends JBaseVisitor<JValue> {
         JValue v1 = visit(ctx.expression(0)), v2 = visit(ctx.expression(1));
         String id = ctx.ID().getText();
         Integer step = 1;
-        if(ctx.term() != null) {
+        if (ctx.term() != null) {
             JValue v = visit(ctx.term());
-            step = ((JInteger)v).getValue();
+            step = ((JInteger) v).getValue();
         }
 
         if (v1.getType() == JType.INTEGER && v2.getType() == JType.INTEGER) {
@@ -145,24 +156,36 @@ public class JRunPhase extends JBaseVisitor<JValue> {
             if (!scope.hasVariable(id))
                 scope.declareVariable(id, v1);
 
-            if(n1 <= n2) {
+            if (n1 <= n2) {
                 for (; n1 <= n2; n1 += step) {
                     scope.assignVariable(id, new JInteger(n1));
                     scope = new JScope(scope);
-                    visit(ctx.statement_list());
-                    scope = scope.getParent();
-
-                    n1 = (Integer) scope.getVariable(id).getValue();
+                    try {
+                        visit(ctx.statement_list());
+                    } catch (JBreak br) {
+                        break;
+                    } catch (JContinue con) {
+                        continue;
+                    } finally {
+                        scope = scope.getParent();
+                        n1 = (Integer) scope.getVariable(id).getValue();
+                    }
                 }
             } else {
                 step = -1 * Math.abs(step);
                 for (; n1 >= n2; n1 += step) {
                     scope.assignVariable(id, new JInteger(n1));
                     scope = new JScope(scope);
-                    visit(ctx.statement_list());
-                    scope = scope.getParent();
-
-                    n1 = (Integer) scope.getVariable(id).getValue();
+                    try {
+                        visit(ctx.statement_list());
+                    } catch (JBreak br) {
+                        break;
+                    } catch (JContinue con) {
+                        continue;
+                    } finally {
+                        scope = scope.getParent();
+                        n1 = (Integer) scope.getVariable(id).getValue();
+                    }
                 }
             }
         }
@@ -175,37 +198,59 @@ public class JRunPhase extends JBaseVisitor<JValue> {
         String id = ctx.ID().getText();
         JValue v1 = scope.getVariable(id), v2 = visit(ctx.expression());
         Integer step = 1;
-        if(ctx.term() != null) {
+        if (ctx.term() != null) {
             JValue v = visit(ctx.term());
-            step = ((JInteger)v).getValue();
+            step = ((JInteger) v).getValue();
         }
 
         if (v1.getType() == JType.INTEGER && v2.getType() == JType.INTEGER) {
             int n1 = (Integer) v1.getValue(), n2 = (Integer) v2.getValue();
 
-            if(n1 <= n2) {
+            if (n1 <= n2) {
                 for (; n1 <= n2; n1 += step) {
                     scope.assignVariable(id, new JInteger(n1));
                     scope = new JScope(scope);
-                    visit(ctx.statement_list());
-                    scope = scope.getParent();
-
-                    n1 = (Integer) scope.getVariable(id).getValue();
+                    try {
+                        visit(ctx.statement_list());
+                    } catch (JBreak br) {
+                        break;
+                    } catch (JContinue con) {
+                        continue;
+                    } finally {
+                        scope = scope.getParent();
+                        n1 = (Integer) scope.getVariable(id).getValue();
+                    }
                 }
             } else {
                 step = -1 * Math.abs(step);
                 for (; n1 >= n2; n1 += step) {
                     scope.assignVariable(id, new JInteger(n1));
                     scope = new JScope(scope);
-                    visit(ctx.statement_list());
-                    scope = scope.getParent();
-
-                    n1 = (Integer) scope.getVariable(id).getValue();
+                    try {
+                        visit(ctx.statement_list());
+                    } catch (JBreak br) {
+                        break;
+                    } catch (JContinue con) {
+                        continue;
+                    } finally {
+                        scope = scope.getParent();
+                        n1 = (Integer) scope.getVariable(id).getValue();
+                    }
                 }
             }
         }
 
         return null;
+    }
+
+    @Override
+    public JValue visitStatementBreak(StatementBreakContext ctx) {
+        throw new JBreak();
+    }
+
+    @Override
+    public JValue visitStatementContinue(StatementContinueContext ctx) {
+        throw new JContinue();
     }
 
     @Override

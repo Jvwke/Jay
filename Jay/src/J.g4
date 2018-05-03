@@ -9,6 +9,8 @@ PROGRAM     : 'program'         ;
 FUNCTION    : 'function'        ;
 AS          : 'as'              ;
 RETURN      : 'return'          ;
+BREAK       : 'break'           ;
+CONTINUE    : 'continue'        ;
 TO          : 'to'              ;
 NOT         : 'not'     | '!'   ;
 IF          : 'if'              ;
@@ -89,6 +91,8 @@ statement
         statement_list
       END FOR                                           #statementFor
     | RETURN expression?                                #statementReturn
+    | BREAK                                             #statementBreak
+    | CONTINUE                                          #statementContinue
     | function_call                                     #statementFunctionCall
     ;
 

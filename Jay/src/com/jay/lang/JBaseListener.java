@@ -161,6 +161,30 @@ public class JBaseListener implements JListener {
      *
      * <p>The default implementation does nothing.</p>
      */
+    @Override public void enterStatementBreak(JParser.StatementBreakContext ctx) { }
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void exitStatementBreak(JParser.StatementBreakContext ctx) { }
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void enterStatementContinue(JParser.StatementContinueContext ctx) { }
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void exitStatementContinue(JParser.StatementContinueContext ctx) { }
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
     @Override public void enterStatementFunctionCall(JParser.StatementFunctionCallContext ctx) { }
     /**
      * {@inheritDoc}

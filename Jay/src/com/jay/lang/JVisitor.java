@@ -91,6 +91,20 @@ public interface JVisitor<T> extends ParseTreeVisitor<T> {
      */
     T visitStatementReturn(JParser.StatementReturnContext ctx);
     /**
+     * Visit a parse tree produced by the {@code statementBreak}
+     * labeled alternative in {@link JParser#statement}.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitStatementBreak(JParser.StatementBreakContext ctx);
+    /**
+     * Visit a parse tree produced by the {@code statementContinue}
+     * labeled alternative in {@link JParser#statement}.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitStatementContinue(JParser.StatementContinueContext ctx);
+    /**
      * Visit a parse tree produced by the {@code statementFunctionCall}
      * labeled alternative in {@link JParser#statement}.
      * @param ctx the parse tree

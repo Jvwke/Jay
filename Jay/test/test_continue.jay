@@ -1,0 +1,12 @@
+program Array
+
+int i = 0
+while i < 9 then
+    write("i=", i)
+    if i == 4 then
+        write("Bad luck! I have to work hard!")
+        i = i + 1
+        continue
+    end if
+    i = i + 1
+end while

@@ -143,6 +143,30 @@ public interface JListener extends ParseTreeListener {
      */
     void exitStatementReturn(JParser.StatementReturnContext ctx);
     /**
+     * Enter a parse tree produced by the {@code statementBreak}
+     * labeled alternative in {@link JParser#statement}.
+     * @param ctx the parse tree
+     */
+    void enterStatementBreak(JParser.StatementBreakContext ctx);
+    /**
+     * Exit a parse tree produced by the {@code statementBreak}
+     * labeled alternative in {@link JParser#statement}.
+     * @param ctx the parse tree
+     */
+    void exitStatementBreak(JParser.StatementBreakContext ctx);
+    /**
+     * Enter a parse tree produced by the {@code statementContinue}
+     * labeled alternative in {@link JParser#statement}.
+     * @param ctx the parse tree
+     */
+    void enterStatementContinue(JParser.StatementContinueContext ctx);
+    /**
+     * Exit a parse tree produced by the {@code statementContinue}
+     * labeled alternative in {@link JParser#statement}.
+     * @param ctx the parse tree
+     */
+    void exitStatementContinue(JParser.StatementContinueContext ctx);
+    /**
      * Enter a parse tree produced by the {@code statementFunctionCall}
      * labeled alternative in {@link JParser#statement}.
      * @param ctx the parse tree
