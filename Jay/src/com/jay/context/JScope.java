@@ -139,4 +139,8 @@ public class JScope {
     public JType getDeclaredType() {
         return declaredType;
     }
+
+    public Map<String, JValue> getVariables() {
+        return variables;
+    }
 }

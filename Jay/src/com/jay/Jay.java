@@ -10,8 +10,8 @@ import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import com.jay.context.JDefListener;
-import com.jay.context.JRunVisitor;
+import com.jay.context.JDefPhase;
+import com.jay.context.JRunPhase;
 import com.jay.lang.JLexer;
 import com.jay.lang.JParser;
 import com.jay.type.JFunction;
@@ -57,17 +57,17 @@ public class Jay {
 
         // scan whole file to find all declared functions
         ParseTreeWalker walker = new ParseTreeWalker();
-        JDefListener def = new JDefListener();
+        JDefPhase def = new JDefPhase();
         walker.walk(def, tree);
 
         // run the program
-        JRunVisitor run = new JRunVisitor(def.getFunctions());
+        JRunPhase run = new JRunPhase(def.getFunctions());
         run.visit(tree);
 
         return def.getFunctions();
     }
     
-    public static Map<String, JFunction> loadProgram(String fileName) {
+    public static JDefPhase loadProgram(String fileName) {
         CharStream input = null;
         try {
             input = CharStreams.fromFileName(fileName);
@@ -80,7 +80,7 @@ public class Jay {
         return loadProgram(input);
     }
     
-    public static Map<String, JFunction> loadProgram(CharStream input) {
+    public static JDefPhase loadProgram(CharStream input) {
         JLexer lexer = new JLexer(input);
         TokenStream tokens = new CommonTokenStream(lexer);
 
@@ -90,9 +90,9 @@ public class Jay {
 
         // scan whole file to find all declared functions
         ParseTreeWalker walker = new ParseTreeWalker();
-        JDefListener def = new JDefListener();
+        JDefPhase def = new JDefPhase();
         walker.walk(def, tree);
 
-        return def.getFunctions();
+        return def;
     }
 }

@@ -24,19 +24,19 @@ import com.jay.type.JString;
 import com.jay.type.JType;
 import com.jay.type.JValue;
 
-public class JRunVisitor extends JBaseVisitor<JValue> {
+public class JRunPhase extends JBaseVisitor<JValue> {
     private JScope scope;
     private Map<String, JFunction> functions;
 
-    public JRunVisitor() {
+    public JRunPhase() {
         this(new JScope(), new HashMap<>());
     }
 
-    public JRunVisitor(Map<String, JFunction> functions) {
+    public JRunPhase(Map<String, JFunction> functions) {
         this(new JScope(), functions);
     }
     
-    public JRunVisitor(JScope scope, Map<String, JFunction> functions) {
+    public JRunPhase(JScope scope, Map<String, JFunction> functions) {
         this.scope = scope;
         this.functions = functions;
     }

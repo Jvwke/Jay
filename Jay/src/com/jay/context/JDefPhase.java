@@ -15,7 +15,7 @@ import com.jay.lang.JParser.Statement_listContext;
 import com.jay.type.JFunction;
 import com.jay.type.JType;
 
-public class JDefListener extends JBaseListener {
+public class JDefPhase extends JBaseListener {
 
     private Map<String, JFunction> functions = new HashMap<>();
 
@@ -33,9 +33,9 @@ public class JDefListener extends JBaseListener {
         String fileName = ctx.file.getText();
         // trim left and right " or '
         fileName = fileName.substring(1, fileName.length() - 1);
-        Map<String, JFunction> funcs = Jay.loadProgram(fileName);
-        if (funcs != null) {
-            functions.putAll(funcs);
+        JDefPhase def = Jay.loadProgram(fileName);
+        if (def.getFunctions() != null) {
+            functions.putAll(def.getFunctions());
         }
     }
 
