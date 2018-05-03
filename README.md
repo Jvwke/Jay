@@ -39,6 +39,6 @@ The import only scan the function from imported file, omit all global variables 
 # Available Features:
 ```
 1.2018/05/01: Hello World! Support if, for, while, Array
-2.2018/05/02: Support import, Call function before decalaration
-3.2018/05/03: Support break, continue, fix circular import issue like A->B->A
+2.2018/05/02: Support import keyword, Call function before decalaration
+3.2018/05/03: Highlight the code at the syntax error raised position; Support break, continue keywords; fix circular import issue like A->B->A
 ```
