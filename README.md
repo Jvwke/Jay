@@ -7,7 +7,7 @@ When I study the redis, I want to build a JRedis by myself, however I find that 
 # Guide
 You can refer to the guide of ANTLR to install the antlr software(https://github.com/antlr/antlr4/blob/master/doc/getting-started.md). You can althougn use the gen.sh already in Jay project to install the antlr on Ubuntu.
 
-If you change the J.g4 to match your own lanuage grammar, please use gen.sh to generate the language code runtime. When you change the source code, you can use all.sh to generate the language code and compile them and do testing. If you only want to do some test, use the run.sh is a short way.
+If you change the J.g4 to match your own lanuage grammar, please use gen.sh to generate the language code runtime. When you change the source code, you can use all.sh to generate the language code and compile them and do testing. If you only want to do some test, use the test.sh or run.sh xxx.jay is a short way.
 
 # Examples
 You can find examples at the test folder, all files with the subfix of '.jay'. The following is an example from test.jay
