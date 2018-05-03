@@ -51,12 +51,15 @@ COMPARE_OP
     ;
 
 program
-    : (PROGRAM ID)? (imports)* (function | statement)+
+    : (PROGRAM ID)? import_list (function | statement)+
     ;
+
+import_list
+    : (imports)*;
 
 imports
     : IMPORT file = CONST_STRING;
-
+    
 function_list
     : function+
     |

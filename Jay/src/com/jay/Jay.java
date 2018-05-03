@@ -1,14 +1,15 @@
 package com.jay;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import com.jay.context.JDefPhase;
 import com.jay.context.JErrorListener;
@@ -34,6 +35,18 @@ public class Jay {
             runProgram(input);
         }
     }
+    
+    private static ThreadLocal<Set<String>> LOADED_FILES = new ThreadLocal<>();
+    static {
+        LOADED_FILES.set(new HashSet<>());
+    }
+    public static boolean isFileLoaded(String fileName) {
+        return LOADED_FILES.get().contains(fileName);
+    }
+    
+    public static void registerFile(String fileName) {
+        LOADED_FILES.get().add(fileName);
+    }
 
     public static Map<String, JFunction> runProgram(String fileName) {
         CharStream input = null;
@@ -45,11 +58,15 @@ public class Jay {
             return null;
         }
 
-        return runProgram(input);
+        return runProgram(fileName, input);
     }
 
     public static Map<String, JFunction> runProgram(CharStream input) {
-        JDefPhase def = loadProgram(input);
+        return runProgram("__system_in__", input);
+    }
+    
+    public static Map<String, JFunction> runProgram(String fileName, CharStream input) {
+        JDefPhase def = loadProgram(fileName, input);
 
         // run the program
         JRunPhase run = new JRunPhase(def.getFunctions());
@@ -68,10 +85,10 @@ public class Jay {
             return null;
         }
 
-        return loadProgram(input);
+        return loadProgram(fileName, input);
     }
     
-    public static JDefPhase loadProgram(CharStream input) {
+    public static JDefPhase loadProgram(String fileName, CharStream input) {
         JLexer lexer = new JLexer(input);
         TokenStream tokens = new CommonTokenStream(lexer);
 
@@ -81,10 +98,11 @@ public class Jay {
         parser.addErrorListener(new JErrorListener());
         ParseTree tree = parser.program();
 
+        // register fileName before really loaded
+        Jay.registerFile(fileName);
         // scan whole file to find all declared functions
-        ParseTreeWalker walker = new ParseTreeWalker();
-        JDefPhase def = new JDefPhase(tree);
-        walker.walk(def, tree);
+        JDefPhase def = new JDefPhase(fileName, tree);
+        def.visit(tree);
 
         return def;
     }

@@ -29,6 +29,18 @@ public class JBaseListener implements JListener {
      *
      * <p>The default implementation does nothing.</p>
      */
+    @Override public void enterImport_list(JParser.Import_listContext ctx) { }
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override public void exitImport_list(JParser.Import_listContext ctx) { }
+    /**
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
     @Override public void enterImports(JParser.ImportsContext ctx) { }
     /**
      * {@inheritDoc}

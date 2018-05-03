@@ -19,6 +19,16 @@ public interface JListener extends ParseTreeListener {
      */
     void exitProgram(JParser.ProgramContext ctx);
     /**
+     * Enter a parse tree produced by {@link JParser#import_list}.
+     * @param ctx the parse tree
+     */
+    void enterImport_list(JParser.Import_listContext ctx);
+    /**
+     * Exit a parse tree produced by {@link JParser#import_list}.
+     * @param ctx the parse tree
+     */
+    void exitImport_list(JParser.Import_listContext ctx);
+    /**
      * Enter a parse tree produced by {@link JParser#imports}.
      * @param ctx the parse tree
      */

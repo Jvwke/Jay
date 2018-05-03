@@ -9,42 +9,75 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import com.jay.Jay;
-import com.jay.lang.JBaseListener;
+import com.jay.lang.JBaseVisitor;
 import com.jay.lang.JParser;
+import com.jay.lang.JParser.Import_listContext;
 import com.jay.lang.JParser.ImportsContext;
+import com.jay.lang.JParser.ProgramContext;
 import com.jay.lang.JParser.Statement_listContext;
 import com.jay.type.JFunction;
+import com.jay.type.JImport;
 import com.jay.type.JType;
+import com.jay.type.JValue;
 
-public class JDefPhase extends JBaseListener {
+public class JDefPhase extends JBaseVisitor<JValue>  {
     
     private ParseTree tree;
+    private String fileName;
     
-    public JDefPhase(ParseTree tree) {
+    public JDefPhase(String fileName, ParseTree tree) {
         super();
+        this.fileName = fileName;
         this.tree = tree;
     }
 
     private Map<String, JFunction> functions = new HashMap<>();
+    
+    @Override
+    public JValue visitProgram(ProgramContext ctx) {
+        // TODO Auto-generated method stub
+        return super.visitProgram(ctx);
+    }
 
-    public void enterFunction(JParser.FunctionContext ctx) {
+    @Override
+    public JValue visitFunction(JParser.FunctionContext ctx) {
         List<TerminalNode> parameters = ctx.id_list() != null ? ctx.id_list().ID() : Collections.emptyList();
         Statement_listContext statements = ctx.statement_list();
         String fId = ctx.name.getText(), id = fId + "@" + parameters.size(),
                 t = ctx.r == null ? "nil" : ctx.r.getText();
 
         functions.put(id, new JFunction(JType.find(t), parameters, statements));
+        return null;
     }
 
+
     @Override
-    public void enterImports(ImportsContext ctx) {
+    public JValue visitImport_list(Import_listContext ctx) {
+        List<ImportsContext> imports = ctx.imports();
+        for(ImportsContext im : imports) {
+            try {
+                visit(im);
+            } catch (JImport e) {
+            }
+        }
+        return null;
+    }
+    
+    @Override
+    public JValue visitImports(ImportsContext ctx) {
         String fileName = ctx.file.getText();
         // trim left and right " or '
         fileName = fileName.substring(1, fileName.length() - 1);
+        
+        if(Jay.isFileLoaded(fileName)) {
+            throw new JImport();
+        }
         JDefPhase def = Jay.loadProgram(fileName);
         if (def.getFunctions() != null) {
             functions.putAll(def.getFunctions());
         }
+        Jay.registerFile(fileName);
+        return null;
     }
 
     public Map<String, JFunction> getFunctions() {
@@ -53,5 +86,9 @@ public class JDefPhase extends JBaseListener {
 
     public ParseTree getTree() {
         return tree;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }
