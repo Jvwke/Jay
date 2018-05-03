@@ -1,5 +1,7 @@
 program Fib
 
+write("Test syntax error report")
+
 function f(x) as int
   
   if y <= 1 then
