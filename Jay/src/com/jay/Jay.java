@@ -1,9 +1,10 @@
 package com.jay;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -35,17 +36,20 @@ public class Jay {
             runProgram(input);
         }
     }
-    
-    private static ThreadLocal<Set<String>> LOADED_FILES = new ThreadLocal<>();
-    static {
-        LOADED_FILES.set(new HashSet<>());
-    }
+    /**
+     * Remember all loaded file
+     */
+    private static Set<String> LOADED_FILES = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
     public static boolean isFileLoaded(String fileName) {
-        return LOADED_FILES.get().contains(fileName);
+        return LOADED_FILES.contains(fileName);
     }
     
+    /**
+     * Register that the file will be load
+     * @param fileName
+     */
     public static void registerFile(String fileName) {
-        LOADED_FILES.get().add(fileName);
+        LOADED_FILES.add(fileName);
     }
 
     public static Map<String, JFunction> runProgram(String fileName) {
