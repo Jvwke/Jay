@@ -29,7 +29,7 @@ public class JLibrary {
     }
 
     public static void loadCoreLibrary() {
-        // to invork static code block
+        // to invoke static code block
     }
 
     public static void loadLibrary(String fileName, InputStream in) {
