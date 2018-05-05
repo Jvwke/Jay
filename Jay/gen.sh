@@ -44,6 +44,6 @@ do
     rm -rf ./$lang$file
 done
 
-cd ../
+cd ../../../
 echo '----------------------------'
 echo 'done'
