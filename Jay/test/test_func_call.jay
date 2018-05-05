@@ -1,7 +1,7 @@
 program Fib
 
 // call function before declare it
-write("The 6th term of the Fibonacci sequence is: ", f(2))
+println("The 6th term of the Fibonacci sequence is: " + f(2))
 
 function f(x) as int
   

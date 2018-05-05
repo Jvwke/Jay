@@ -2,7 +2,6 @@ package com.jay;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,12 +11,15 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import com.jay.context.JDefPhase;
+import com.jay.context.JDef;
 import com.jay.context.JErrorListener;
-import com.jay.context.JRunPhase;
+import com.jay.context.JRun;
 import com.jay.lang.JLexer;
 import com.jay.lang.JParser;
-import com.jay.type.JFunction;
+import com.jay.library.JLibrary;
+import com.jay.type.JNil;
+import com.jay.type.JString;
+import com.jay.type.JValue;
 
 public class Jay {
     public static void main(String[] args) {
@@ -52,7 +54,7 @@ public class Jay {
         LOADED_FILES.add(fileName);
     }
 
-    public static Map<String, JFunction> runProgram(String fileName) {
+    public static JDef runProgram(String fileName) {
         CharStream input = null;
         try {
             input = CharStreams.fromFileName(fileName);
@@ -65,21 +67,21 @@ public class Jay {
         return runProgram(fileName, input);
     }
 
-    public static Map<String, JFunction> runProgram(CharStream input) {
+    public static JDef runProgram(CharStream input) {
         return runProgram("__system_in__", input);
     }
     
-    public static Map<String, JFunction> runProgram(String fileName, CharStream input) {
-        JDefPhase def = loadProgram(fileName, input);
+    public static JDef runProgram(String fileName, CharStream input) {
+        JDef def = loadProgram(fileName, input);
 
         // run the program
-        JRunPhase run = new JRunPhase(def.getFunctions());
+        JRun run = new JRun(def.getFunctions());
         run.visit(def.getTree());
 
-        return def.getFunctions();
+        return def;
     }
     
-    public static JDefPhase loadProgram(String fileName) {
+    public static JDef loadProgram(String fileName) {
         CharStream input = null;
         try {
             input = CharStreams.fromFileName(fileName);
@@ -92,7 +94,9 @@ public class Jay {
         return loadProgram(fileName, input);
     }
     
-    public static JDefPhase loadProgram(String fileName, CharStream input) {
+    public static JDef loadProgram(String fileName, CharStream input) {
+        JLibrary.native_print(null);
+        
         JLexer lexer = new JLexer(input);
         TokenStream tokens = new CommonTokenStream(lexer);
 
@@ -105,7 +109,7 @@ public class Jay {
         // register fileName before really loaded
         Jay.registerFile(fileName);
         // scan whole file to find all declared functions
-        JDefPhase def = new JDefPhase(fileName, tree);
+        JDef def = new JDef(fileName, tree);
         def.visit(tree);
 
         return def;

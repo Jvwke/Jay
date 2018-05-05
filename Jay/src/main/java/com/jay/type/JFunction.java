@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import com.jay.context.JRunPhase;
+import com.jay.context.JRun;
 import com.jay.context.JScope;
 import com.jay.lang.JParser.Statement_listContext;
 
@@ -24,10 +24,14 @@ public class JFunction {
 
     public JValue invoke(JScope scope, Map<String, JFunction> functions, List<JValue> paramValues) {
         scope = new JScope(scope);
-        JRunPhase visitor = new JRunPhase(scope, functions);
+        JRun visitor = new JRun(scope, functions);
 
         int len = paramValues.size();
+        int len_parameters = parameters.size();
         for (int i = 0; i < len; i++) {
+            if(len_parameters <= i) {
+                continue;
+            }
             JValue paramValue = paramValues.get(i);
 
             scope.setDeclaredType(paramValue.getType());

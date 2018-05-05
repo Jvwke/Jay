@@ -2,11 +2,11 @@ program Array
 
 int i = 0
 while i < 9 then
-    write("i=", i)
+    println("i=" + i)
     i = i + 1
     
     if i == 8 then
-        write("I am very lucky! I want to play games!")
+        println("I am very lucky! I want to play games!")
         break
     end if
 end while

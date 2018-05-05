@@ -22,11 +22,10 @@ THEN        : 'then'            ;
 VAR         : 'var'             ;
 TRUE        : 'true'            ;
 FALSE       : 'false'           ;
-WRITE       : 'write'           ;
-READ        : 'read'            ;
 TYPEOF      : 'typeof'          ;
 DYNAMIC     : 'dynamic'         ;
 IMPORT      : 'import'          ;
+NATIVE      : 'native'          ;
 
 CONST_TYPE 
     : 'array' 
@@ -160,12 +159,11 @@ id_list
     ;
 
 function_call
-    : WRITE '(' expression_list ')'                     #functionCallWrite
+    : NATIVE '(' funName = CONST_STRING ',' expression_list ')' #functionCallNative
     | ID ('(' expression_list ')')?                     #functionCallId
     | DYNAMIC '(' ID ')'                                #functionCallDynamic
     | CONST_TYPE '(' expression ')'                     #functionCallCast
     | TYPEOF '(' expression ')'                         #functionCallTypeof
-    | READ                                              #functionCallRead
     ;
 
 CONST_INT : '-'? CONST_NATUAL_NO ;

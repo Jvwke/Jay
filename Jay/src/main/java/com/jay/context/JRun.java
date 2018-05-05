@@ -12,8 +12,10 @@ import com.jay.lang.JBaseVisitor;
 import com.jay.lang.JParser;
 import com.jay.lang.JParser.ExpressionContext;
 import com.jay.lang.JParser.Expression_listContext;
+import com.jay.lang.JParser.FunctionCallNativeContext;
 import com.jay.lang.JParser.StatementBreakContext;
 import com.jay.lang.JParser.StatementContinueContext;
+import com.jay.library.JLibrary;
 import com.jay.type.JArray;
 import com.jay.type.JBool;
 import com.jay.type.JBreak;
@@ -28,19 +30,19 @@ import com.jay.type.JString;
 import com.jay.type.JType;
 import com.jay.type.JValue;
 
-public class JRunPhase extends JBaseVisitor<JValue> {
+public class JRun extends JBaseVisitor<JValue> {
     private JScope scope;
     private Map<String, JFunction> functions;
 
-    public JRunPhase() {
+    public JRun() {
         this(new JScope(), new HashMap<>());
     }
 
-    public JRunPhase(Map<String, JFunction> functions) {
+    public JRun(Map<String, JFunction> functions) {
         this(new JScope(), functions);
     }
 
-    public JRunPhase(JScope scope, Map<String, JFunction> functions) {
+    public JRun(JScope scope, Map<String, JFunction> functions) {
         this.scope = scope;
         this.functions = functions;
     }
@@ -255,7 +257,7 @@ public class JRunPhase extends JBaseVisitor<JValue> {
 
     @Override
     public JValue visitStatementReturn(JParser.StatementReturnContext ctx) {
-        JValue value = ctx.expression() != null ? visit(ctx.expression()) : new JNil(null);
+        JValue value = ctx.expression() != null ? visit(ctx.expression()) : JNil.ME;
 
         throw new JReturn(value);
     }
@@ -444,21 +446,32 @@ public class JRunPhase extends JBaseVisitor<JValue> {
     @Override
     public JValue visitFunctionCallId(JParser.FunctionCallIdContext ctx) {
         List<JValue> list = createParameterList(ctx.expression_list());
-        String id = ctx.ID().getText() + "@" + list.size();
-
-        return functions.get(id).invoke(scope, functions, list);
-    }
-
-    @Override
-    public JValue visitFunctionCallWrite(JParser.FunctionCallWriteContext ctx) {
-        List<JValue> list = createParameterList(ctx.expression_list());
-
-        for (JValue v : list) {
-            System.out.print(v);
+        String funName = ctx.ID().getText();
+        if(functions.containsKey(funName)) {
+            return functions.get(funName).invoke(scope, functions, list);
         }
-
-        System.out.println();
-
+        if(JLibrary.FUNCTIONS.containsKey(funName)) {
+            return JLibrary.FUNCTIONS.get(funName).invoke(scope, JLibrary.FUNCTIONS, list);
+        }
+        throwError("function " + funName + " not declared!");
+        return null;
+    }
+    
+    @Override
+    public JValue visitFunctionCallNative(FunctionCallNativeContext ctx) {
+        List<JValue> list = createParameterList(ctx.expression_list());
+        String funName = ctx.funName.getText();
+        funName = funName.substring(1, funName.length()-1);
+        if(JLibrary.NATIVE_FUNCTIONS.containsKey(funName)) {
+            try {
+                JLibrary.NATIVE_FUNCTIONS.get(funName).invoke(this, list);
+            } catch (Exception e) {
+                throwError("Error raised when call native function " + funName);
+                e.printStackTrace();
+            }
+            return null;
+        }
+        throwError("function " + funName + " not declared!");
         return null;
     }
 
@@ -498,7 +511,6 @@ public class JRunPhase extends JBaseVisitor<JValue> {
         }
     }
 
-    @SuppressWarnings("unused")
     private void throwError(String message) {
         System.err.println("ERROR: " + message + ".");
         System.exit(-1);

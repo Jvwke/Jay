@@ -11,4 +11,4 @@ function compare(x, y) as int
 end function
 
 int cmp = compare(1,2)
-write("compare of 1 to 2 = ", cmp)
+println("compare of 1 to 2 = " + cmp)

@@ -9,7 +9,7 @@ import org.antlr.v4.runtime.Token;
 public class JErrorListener extends BaseErrorListener {
     public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine,
             String msg, RecognitionException e) {
-        System.err.printf("line %d:%d %s", line, charPositionInLine, msg);
+        System.err.printf("line %d:%d %s\n", line, charPositionInLine, msg);
         highLightError(recognizer, (Token) offendingSymbol, line, charPositionInLine);
     }
 

@@ -1,19 +1,27 @@
 package com.jay.type;
 
 public class JString extends JValue {
+    @Override
+    public String toString() {
+        return this.value == null ? "" : this.value.toString();
+    }
+
     public JString(String value) {
         this.value = value;
         type = JType.STRING;
     }
 
     public JValue add(JValue v) {
-        if (v instanceof JString) {
-            String s1 = (String) this.getValue(), s2 = (String) v.getValue();
+        String s1 = this.getValue();
 
-            return new JString(s1.concat(s2));
+        String s2 = null;
+        if (v instanceof JArray) {
+            s2 = v.toString();
+        } else {
+            s2 = v.getValue() == null ? "" : v.getValue().toString();
         }
 
-        throw new UnsupportedOperationException();
+        return new JString(s1.concat(s2));
     }
 
     public JValue divide(JValue v) {

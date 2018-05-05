@@ -14,4 +14,4 @@ function min3(x, y, z) as int
   return n
 end function
 
-write ("min(3,2,1) = ", min3(3,2,1))
+println("min(3,2,1) = " + min3(3,2,1))

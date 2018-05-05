@@ -4,4 +4,4 @@ function sum(x, y) as int
   return x + y
 end function
 
-write("sum of 1 + 2 = ", sum(1,2))
+println("sum of 1 + 2 = " + sum(1,2))

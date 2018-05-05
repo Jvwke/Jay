@@ -11,7 +11,7 @@ if [ ! -f $jar_path$jar ]; then
 fi
 
 # set enviroment variable
-cd ./src
+cd ./src/main/java
 echo "build $lang.g4"
 CLASSPATH=".:$jar_path$jar:$CLASSPATH"
 java -Xmx500M -cp "$jar_path$jar:$CLASSPATH" org.antlr.v4.Tool -visitor ${lang}.g4

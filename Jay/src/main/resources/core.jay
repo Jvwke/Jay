@@ -1,0 +1,9 @@
+program CoreLibrary
+
+function print(x)
+  native("print", x)
+end function
+
+function println(x)
+  native("println", x)
+end function

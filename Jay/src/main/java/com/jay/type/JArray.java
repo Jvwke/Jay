@@ -117,4 +117,22 @@ public class JArray extends JValue {
     public int length() {
         return ((JValue[]) getValue()).length;
     }
+    
+    @Override
+    public String toString() {
+        JValue[] values = getValue();
+        if(values == null || values.length == 0) {
+            return "()";
+        }
+        StringBuilder sb = new StringBuilder("(");
+        int len = values.length;
+        for(int i = 0; i< len;i++) {
+            sb.append(values[i].toString());
+            if(len > 1 && i < len -1) {
+                sb.append(",");
+            }
+        }
+        sb.append(")");
+        return sb.toString();
+    }
 }

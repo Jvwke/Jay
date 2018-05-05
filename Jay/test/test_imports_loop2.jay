@@ -2,4 +2,4 @@ program Imports
 
 import "/home/j3z/git/Jay/Jay/test/test_imports_loop.jay"
 
-write("loop2")
+println("loop2")
