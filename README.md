@@ -41,4 +41,5 @@ The import only scan the function from imported file, omit all global variables 
 1.2018/05/01: Hello World! Support if, for, while, Array
 2.2018/05/02: Support import keyword, Call function before decalaration
 3.2018/05/03: Highlight the code at the syntax error raised position; Support break, continue keywords; fix circular import issue like A->B->A
+4.2018/05/05: Add core jay library and support call native function
 ```
