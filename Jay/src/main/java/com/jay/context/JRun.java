@@ -248,12 +248,12 @@ public class JRun extends JBaseVisitor<JValue> {
 
     @Override
     public JValue visitStatementBreak(StatementBreakContext ctx) {
-        throw new JBreak();
+        throw JBreak.ME;
     }
 
     @Override
     public JValue visitStatementContinue(StatementContinueContext ctx) {
-        throw new JContinue();
+        throw JContinue.ME;
     }
 
     @Override
