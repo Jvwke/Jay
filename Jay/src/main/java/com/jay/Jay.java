@@ -35,16 +35,19 @@ public class Jay {
             runProgram(input);
         }
     }
+
     /**
      * Remember all loaded file
      */
     private static Set<String> LOADED_FILES = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+
     public static boolean isFileLoaded(String fileName) {
         return LOADED_FILES.contains(fileName);
     }
-    
+
     /**
      * Register that the file will be load
+     * 
      * @param fileName
      */
     public static void registerFile(String fileName) {
@@ -67,7 +70,7 @@ public class Jay {
     public static JDef runProgram(CharStream input) {
         return runProgram("__system_in__", input);
     }
-    
+
     public static JDef runProgram(String fileName, CharStream input) {
         JDef def = loadProgram(fileName, input);
 
@@ -77,7 +80,7 @@ public class Jay {
 
         return def;
     }
-    
+
     public static JDef loadProgram(String fileName) {
         CharStream input = null;
         try {
@@ -90,10 +93,10 @@ public class Jay {
 
         return loadProgram(fileName, input);
     }
-    
+
     public static JDef loadProgram(String fileName, CharStream input) {
-        JLibrary.native_print(null);
-        
+        JLibrary.loadCoreLibrary();
+
         JLexer lexer = new JLexer(input);
         TokenStream tokens = new CommonTokenStream(lexer);
 

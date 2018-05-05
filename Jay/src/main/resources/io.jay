@@ -1,4 +1,4 @@
-program CoreLibrary
+program io
 
 function print(x)
   native("print", x)

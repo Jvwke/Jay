@@ -1,6 +1,7 @@
 package com.jay.context;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -445,14 +446,14 @@ public class JRun extends JBaseVisitor<JValue> {
     /* Begin Function Call */
     @Override
     public JValue visitFunctionCallId(JParser.FunctionCallIdContext ctx) {
-        List<JValue> list = createParameterList(ctx.expression_list());
+        List<JValue> params = buildParameterList(ctx.expression_list());
         String funName = ctx.ID().getText();
-        String id = funName + "#" + list.size();
+        String id = funName + "#" + params.size();
         if(functions.containsKey(id)) {
-            return functions.get(id).invoke(scope, functions, list);
+            return functions.get(id).invoke(scope, functions, params);
         }
         if(JLibrary.FUNCTIONS.containsKey(id)) {
-            return JLibrary.FUNCTIONS.get(id).invoke(scope, JLibrary.FUNCTIONS, list);
+            return JLibrary.FUNCTIONS.get(id).invoke(scope, JLibrary.FUNCTIONS, params);
         }
         throwError("function " + funName + " not declared!");
         return null;
@@ -460,13 +461,12 @@ public class JRun extends JBaseVisitor<JValue> {
     
     @Override
     public JValue visitFunctionCallNative(FunctionCallNativeContext ctx) {
-        List<JValue> list = createParameterList(ctx.expression_list());
         String funName = ctx.funName.getText();
         funName = funName.substring(1, funName.length()-1);
         if(JLibrary.NATIVE_FUNCTIONS.containsKey(funName)) {
+            Object params = buildParameters(ctx.expression_list());
             try {
-                Object values = list.toArray(new JValue[list.size()]);
-                JLibrary.NATIVE_FUNCTIONS.get(funName).invoke(this, values);
+                JLibrary.NATIVE_FUNCTIONS.get(funName).invoke(this, params);
             } catch (Exception e) {
                 throwError("Error raised when call native function " + funName, e);
                 e.printStackTrace();
@@ -507,12 +507,6 @@ public class JRun extends JBaseVisitor<JValue> {
     }
     /* End Function Call */
 
-    private void createParameterList(JParser.Expression_listContext ctx, List<JValue> list) {
-        for (int i = 0; i < ctx.expression().size(); i++) {
-            list.add(visit(ctx.expression(i)));
-        }
-    }
-    
     private void throwError(String message) {
         System.err.println("ERROR: " + message + ".");
         System.exit(-1);
@@ -523,13 +517,23 @@ public class JRun extends JBaseVisitor<JValue> {
         e.printStackTrace();
         System.exit(-1);
     }
-
-    private List<JValue> createParameterList(JParser.Expression_listContext ctx) {
-        List<JValue> list = new ArrayList<>();
-
-        if (ctx != null) {
-            createParameterList(ctx, list);
+    
+    private JValue[] buildParameters(JParser.Expression_listContext ctx) {
+        if (ctx == null || ctx.expression().isEmpty()) {
+            return new JValue[0];
         }
-        return list;
+        int len = ctx.expression().size();
+        JValue[] arr = new JValue[len];
+        for (int i = 0; i < len; i++) {
+            arr[i] = visit(ctx.expression(i));
+        }
+        return arr;
+    }
+
+    private List<JValue> buildParameterList(JParser.Expression_listContext ctx) {
+        if (ctx == null || ctx.expression().isEmpty()) {
+            return Collections.emptyList();
+        }
+        return Arrays.asList(buildParameters(ctx));
     }
 }
