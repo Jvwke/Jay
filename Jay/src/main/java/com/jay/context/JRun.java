@@ -466,7 +466,7 @@ public class JRun extends JBaseVisitor<JValue> {
             try {
                 JLibrary.NATIVE_FUNCTIONS.get(funName).invoke(this, list);
             } catch (Exception e) {
-                throwError("Error raised when call native function " + funName);
+                throwError("Error raised when call native function " + funName, e);
                 e.printStackTrace();
             }
             return null;
@@ -510,9 +510,15 @@ public class JRun extends JBaseVisitor<JValue> {
             list.add(visit(ctx.expression(i)));
         }
     }
-
+    
     private void throwError(String message) {
         System.err.println("ERROR: " + message + ".");
+        System.exit(-1);
+    }
+
+    private void throwError(String message, Exception e) {
+        System.err.println("ERROR: " + message + ".");
+        e.printStackTrace();
         System.exit(-1);
     }
 
