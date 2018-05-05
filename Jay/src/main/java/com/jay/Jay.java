@@ -17,9 +17,6 @@ import com.jay.context.JRun;
 import com.jay.lang.JLexer;
 import com.jay.lang.JParser;
 import com.jay.library.JLibrary;
-import com.jay.type.JNil;
-import com.jay.type.JString;
-import com.jay.type.JValue;
 
 public class Jay {
     public static void main(String[] args) {
