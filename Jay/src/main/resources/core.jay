@@ -4,6 +4,14 @@ function print(x)
   native("print", x)
 end function
 
+function print(x, y)
+  native("print", x, y)
+end function
+
 function println(x)
   native("println", x)
+end function
+
+function println(x, y)
+  native("println", x, y)
 end function

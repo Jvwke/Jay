@@ -447,11 +447,12 @@ public class JRun extends JBaseVisitor<JValue> {
     public JValue visitFunctionCallId(JParser.FunctionCallIdContext ctx) {
         List<JValue> list = createParameterList(ctx.expression_list());
         String funName = ctx.ID().getText();
-        if(functions.containsKey(funName)) {
-            return functions.get(funName).invoke(scope, functions, list);
+        String id = funName + "#" + list.size();
+        if(functions.containsKey(id)) {
+            return functions.get(id).invoke(scope, functions, list);
         }
-        if(JLibrary.FUNCTIONS.containsKey(funName)) {
-            return JLibrary.FUNCTIONS.get(funName).invoke(scope, JLibrary.FUNCTIONS, list);
+        if(JLibrary.FUNCTIONS.containsKey(id)) {
+            return JLibrary.FUNCTIONS.get(id).invoke(scope, JLibrary.FUNCTIONS, list);
         }
         throwError("function " + funName + " not declared!");
         return null;
@@ -464,7 +465,8 @@ public class JRun extends JBaseVisitor<JValue> {
         funName = funName.substring(1, funName.length()-1);
         if(JLibrary.NATIVE_FUNCTIONS.containsKey(funName)) {
             try {
-                JLibrary.NATIVE_FUNCTIONS.get(funName).invoke(this, list);
+                Object values = list.toArray(new JValue[list.size()]);
+                JLibrary.NATIVE_FUNCTIONS.get(funName).invoke(this, values);
             } catch (Exception e) {
                 throwError("Error raised when call native function " + funName, e);
                 e.printStackTrace();

@@ -36,7 +36,7 @@ public class JDef extends JBaseVisitor<JValue> {
     public JValue visitFunction(JParser.FunctionContext ctx) {
         List<TerminalNode> parameters = ctx.id_list() != null ? ctx.id_list().ID() : Collections.emptyList();
         Statement_listContext statements = ctx.statement_list();
-        String id = ctx.name.getText(), t = ctx.r == null ? "nil" : ctx.r.getText();
+        String id = ctx.name.getText() + "#" + parameters.size(), t = ctx.r == null ? "nil" : ctx.r.getText();
 
         functions.put(id, new JFunction(JType.find(t), parameters, statements));
         return null;
