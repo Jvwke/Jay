@@ -35,14 +35,14 @@ public class JLibrary {
     public static void loadLibrary(String fileName, InputStream in) {
         try {
             if (in == null) {
-                System.err.println(String.format("Core library of %s is not found.", fileName));
+                System.err.println(String.format("Library of %s is not found.", fileName));
                 return;
             }
             CharStream input = CharStreams.fromStream(in);
             JDef def = Jay.runProgram(fileName, input);
             FUNCTIONS.putAll(def.getFunctions());
         } catch (IOException e) {
-            System.err.println(String.format("Error raised when load core library of %s.", fileName));
+            System.err.println(String.format("Error raised when load library of %s.", fileName));
             e.printStackTrace();
         }
     }
