@@ -2,4 +2,4 @@ program Func_Overload
 
 
 println("How are you?")
-println("Fine, thank you!", "and you?")
+println("Fine, thank you!{0}", "and you?")

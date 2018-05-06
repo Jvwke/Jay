@@ -2,6 +2,6 @@ program Array
 
 int i = 0
 while i < 9 then
-    println("i=" + i)
+    println("i={0}", i)
     i = i + 1
 end while

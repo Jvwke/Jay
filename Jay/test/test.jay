@@ -9,4 +9,4 @@ function f(x) as int
   return f(x - 1) + f(x - 2) 
 end function
 
-println("The 6th term of the Fibonacci sequence is: " + f(6))
+println("The 6th term of the Fibonacci sequence is {0} ", f(6))

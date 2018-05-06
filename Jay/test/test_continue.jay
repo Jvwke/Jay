@@ -2,7 +2,7 @@ program Array
 
 int i = 0
 while i < 9 then
-    println("i=" + i)
+    println("i={0}", i)
     if i == 4 then
         println("Bad luck! I have to work hard!")
         i = i + 1

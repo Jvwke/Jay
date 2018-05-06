@@ -4,4 +4,4 @@ import "/home/j3z/git/Jay/Jay/test/test.jay"
 
 println("")
 println("import test.jay as a library")
-println("The 2th term of the Fibonacci sequence is: " + f(2))
+println("The 2th term of the Fibonacci sequence is: {0}", f(2))
