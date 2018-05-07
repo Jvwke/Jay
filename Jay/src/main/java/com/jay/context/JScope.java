@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.jay.exception.JException;
+import com.jay.library.JLibrary;
 import com.jay.type.JArray;
 import com.jay.type.JType;
 import com.jay.type.JValue;
@@ -39,6 +40,9 @@ public class JScope {
         }
         if (!isGlobal()) {
             return parent.hasVariable(id);
+        }
+        if(JLibrary.VARIABLES.containsKey(id)) {
+            return true;
         }
 
         return false;
@@ -132,7 +136,10 @@ public class JScope {
         } else if (!isGlobal()) {
             return parent.getVariable(id);
         }
-
+        
+        if(JLibrary.VARIABLES.containsKey(id)) {
+            return JLibrary.VARIABLES.get(id);
+        }
         throw JException.variableDoesNotExist(id);
     }
 

@@ -19,6 +19,7 @@ WHILE       : 'while'           ;
 FOR         : 'for'             ;
 STEP        : 'step'            ;
 THEN        : 'then'            ;
+PUBLIC      : 'public'          ;
 VAR         : 'var'             ;
 TRUE        : 'true'            ;
 FALSE       : 'false'           ;
@@ -76,7 +77,7 @@ statement_list
     ;
 
 statement
-    : (CONST_TYPE | VAR) assignment_list                #statementDeclaration
+    : PUBLIC? (CONST_TYPE | VAR) assignment_list        #statementDeclaration
     | ID ('[' i = expression ']')? '=' v = expression   #statementAssignment
     | IF or_expression THEN
         statement_list

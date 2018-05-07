@@ -12,9 +12,11 @@ import org.antlr.v4.runtime.CharStreams;
 import com.jay.Jay;
 import com.jay.context.JDef;
 import com.jay.type.JFunction;
+import com.jay.type.JValue;
 
 public class JLibrary {
 
+    public static Map<String, JValue> VARIABLES = new ConcurrentHashMap<>();
     public static Map<String, JFunction> FUNCTIONS = new ConcurrentHashMap<>();
     public static Map<String, Method> NATIVE_FUNCTIONS = new ConcurrentHashMap<String, Method>();
 
@@ -26,6 +28,11 @@ public class JLibrary {
 
         // load native function
         loadNativeFunctions(JIO.class);
+        
+        fileName = "constants.jay";
+        // load core library
+        in = JLibrary.class.getResourceAsStream("/" + fileName);
+        loadLibrary(fileName, in);
     }
 
     public static void loadCoreLibrary() {
@@ -41,6 +48,7 @@ public class JLibrary {
             CharStream input = CharStreams.fromStream(in);
             JDef def = Jay.runProgram(fileName, input);
             FUNCTIONS.putAll(def.getFunctions());
+            VARIABLES.putAll(def.getVariables());
         } catch (IOException e) {
             System.err.println(String.format("Error raised when load library of %s.", fileName));
             e.printStackTrace();
