@@ -15,6 +15,7 @@ You can find examples at the test folder, all files with the subfix of '.jay'. T
 program Fib
 
 function f(x) as int
+  
   if x <= 1 then
     return x
   end if
@@ -22,7 +23,7 @@ function f(x) as int
   return f(x - 1) + f(x - 2) 
 end function
 
-write("The 6th term of the Fibonacci sequence is: ", f(6))
+println("The 6th term of the Fibonacci sequence is {0} ", f(6))
 ```
 You can also use test.jay as a library, and call the function in test_imports.jay
 ```
@@ -30,11 +31,11 @@ program Imports
 
 import "/home/j3z/git/Jay/Jay/test/test.jay"
 
-write("")
-write("import test.jay as a library")
-write("The 2th term of the Fibonacci sequence is: ", f(2))
+println("")
+println("import test.jay as a library")
+println("The 2th term of the Fibonacci sequence is: {0}", f(2))
 ```
-The import only scan the function from imported file, omit all global variables defined in imported file, please pay attention to avoid some mistakes, In case the function needs to visist the variable, you should redefine it in your main program file.
+The import only scan the function from imported file and all global variables defined in imported file, please pay attention to avoid some mistakes, In case the function needs to visist the variable, you should define as global.
 
 # Available Features:
 ```
@@ -42,4 +43,5 @@ The import only scan the function from imported file, omit all global variables 
 2.2018/05/02: Support import keyword, Call function before decalaration
 3.2018/05/03: Highlight the code at the syntax error raised position; Support break, continue keywords; fix circular import issue like A->B->A
 4.2018/05/05: Add core jay library and support call native function, support function overload.
+5.2018/05/07: Support define global variable
 ```
