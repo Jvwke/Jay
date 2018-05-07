@@ -29,7 +29,7 @@ null
 'for'
 'step'
 'then'
-'public'
+'global'
 'var'
 'true'
 'false'
@@ -84,7 +84,7 @@ WHILE
 FOR
 STEP
 THEN
-PUBLIC
+GLOBAL
 VAR
 TRUE
 FALSE

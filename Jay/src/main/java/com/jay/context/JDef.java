@@ -81,7 +81,7 @@ public class JDef extends JBaseVisitor<JValue> {
 
     @Override
     public JValue visitStatementDeclaration(StatementDeclarationContext ctx) {
-        if (ctx.PUBLIC() == null) {
+        if (ctx.GLOBAL() == null) {
             return null;
         }
         String t = ctx.CONST_TYPE() == null ? "nil" : ctx.CONST_TYPE().getText();

@@ -21,7 +21,7 @@ public class JLexer extends Lexer {
         T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
         T__9=10, T__10=11, AND=12, OR=13, BEGIN=14, END=15, PROGRAM=16, FUNCTION=17, 
         AS=18, RETURN=19, BREAK=20, CONTINUE=21, TO=22, NOT=23, IF=24, ELSE=25, 
-        WHILE=26, FOR=27, STEP=28, THEN=29, PUBLIC=30, VAR=31, TRUE=32, FALSE=33, 
+        WHILE=26, FOR=27, STEP=28, THEN=29, GLOBAL=30, VAR=31, TRUE=32, FALSE=33, 
         TYPEOF=34, DYNAMIC=35, IMPORT=36, NATIVE=37, CONST_TYPE=38, TYPE=39, COMPARE_OP=40, 
         CONST_INT=41, CONST_NATUAL_NO=42, CONST_FLOAT=43, CONST_STRING=44, CONST_NORMAL_STRING=45, 
         CONST_CHAR_STRING=46, POSITIVE_DIGIT=47, DIGIT=48, ID=49, COMMENT=50, 
@@ -38,7 +38,7 @@ public class JLexer extends Lexer {
         "T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
         "T__9", "T__10", "AND", "OR", "BEGIN", "END", "PROGRAM", "FUNCTION", "AS", 
         "RETURN", "BREAK", "CONTINUE", "TO", "NOT", "IF", "ELSE", "WHILE", "FOR", 
-        "STEP", "THEN", "PUBLIC", "VAR", "TRUE", "FALSE", "TYPEOF", "DYNAMIC", 
+        "STEP", "THEN", "GLOBAL", "VAR", "TRUE", "FALSE", "TYPEOF", "DYNAMIC", 
         "IMPORT", "NATIVE", "CONST_TYPE", "TYPE", "COMPARE_OP", "CONST_INT", "CONST_NATUAL_NO", 
         "CONST_FLOAT", "CONST_STRING", "CONST_NORMAL_STRING", "CONST_CHAR_STRING", 
         "ESCAPE_CHAR", "POSITIVE_DIGIT", "DIGIT", "ID", "COMMENT", "LINE_COMMENT", 
@@ -49,14 +49,14 @@ public class JLexer extends Lexer {
         null, "'('", "')'", "'['", "']'", "'='", "'+'", "'-'", "'*'", "'/'", "','", 
         "'[]'", null, null, "'begin'", "'end'", "'program'", "'function'", "'as'", 
         "'return'", "'break'", "'continue'", "'to'", null, "'if'", "'else'", "'while'", 
-        "'for'", "'step'", "'then'", "'public'", "'var'", "'true'", "'false'", 
+        "'for'", "'step'", "'then'", "'global'", "'var'", "'true'", "'false'", 
         "'typeof'", "'dynamic'", "'import'", "'native'"
     };
     private static final String[] _SYMBOLIC_NAMES = {
         null, null, null, null, null, null, null, null, null, null, null, null, 
         "AND", "OR", "BEGIN", "END", "PROGRAM", "FUNCTION", "AS", "RETURN", "BREAK", 
         "CONTINUE", "TO", "NOT", "IF", "ELSE", "WHILE", "FOR", "STEP", "THEN", 
-        "PUBLIC", "VAR", "TRUE", "FALSE", "TYPEOF", "DYNAMIC", "IMPORT", "NATIVE", 
+        "GLOBAL", "VAR", "TRUE", "FALSE", "TYPEOF", "DYNAMIC", "IMPORT", "NATIVE", 
         "CONST_TYPE", "TYPE", "COMPARE_OP", "CONST_INT", "CONST_NATUAL_NO", "CONST_FLOAT", 
         "CONST_STRING", "CONST_NORMAL_STRING", "CONST_CHAR_STRING", "POSITIVE_DIGIT", 
         "DIGIT", "ID", "COMMENT", "LINE_COMMENT", "WS"
@@ -205,8 +205,8 @@ public class JLexer extends Lexer {
         "\7h\2\2\u00dd\u00de\7q\2\2\u00de\u00df\7t\2\2\u00df8\3\2\2\2\u00e0\u00e1"+
         "\7u\2\2\u00e1\u00e2\7v\2\2\u00e2\u00e3\7g\2\2\u00e3\u00e4\7r\2\2\u00e4"+
         ":\3\2\2\2\u00e5\u00e6\7v\2\2\u00e6\u00e7\7j\2\2\u00e7\u00e8\7g\2\2\u00e8"+
-        "\u00e9\7p\2\2\u00e9<\3\2\2\2\u00ea\u00eb\7r\2\2\u00eb\u00ec\7w\2\2\u00ec"+
-        "\u00ed\7d\2\2\u00ed\u00ee\7n\2\2\u00ee\u00ef\7k\2\2\u00ef\u00f0\7e\2\2"+
+        "\u00e9\7p\2\2\u00e9<\3\2\2\2\u00ea\u00eb\7i\2\2\u00eb\u00ec\7n\2\2\u00ec"+
+        "\u00ed\7q\2\2\u00ed\u00ee\7d\2\2\u00ee\u00ef\7c\2\2\u00ef\u00f0\7n\2\2"+
         "\u00f0>\3\2\2\2\u00f1\u00f2\7x\2\2\u00f2\u00f3\7c\2\2\u00f3\u00f4\7t\2"+
         "\2\u00f4@\3\2\2\2\u00f5\u00f6\7v\2\2\u00f6\u00f7\7t\2\2\u00f7\u00f8\7"+
         "w\2\2\u00f8\u00f9\7g\2\2\u00f9B\3\2\2\2\u00fa\u00fb\7h\2\2\u00fb\u00fc"+

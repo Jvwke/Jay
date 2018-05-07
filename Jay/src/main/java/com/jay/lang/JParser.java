@@ -21,7 +21,7 @@ public class JParser extends Parser {
         T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
         T__9=10, T__10=11, AND=12, OR=13, BEGIN=14, END=15, PROGRAM=16, FUNCTION=17, 
         AS=18, RETURN=19, BREAK=20, CONTINUE=21, TO=22, NOT=23, IF=24, ELSE=25, 
-        WHILE=26, FOR=27, STEP=28, THEN=29, PUBLIC=30, VAR=31, TRUE=32, FALSE=33, 
+        WHILE=26, FOR=27, STEP=28, THEN=29, GLOBAL=30, VAR=31, TRUE=32, FALSE=33, 
         TYPEOF=34, DYNAMIC=35, IMPORT=36, NATIVE=37, CONST_TYPE=38, TYPE=39, COMPARE_OP=40, 
         CONST_INT=41, CONST_NATUAL_NO=42, CONST_FLOAT=43, CONST_STRING=44, CONST_NORMAL_STRING=45, 
         CONST_CHAR_STRING=46, POSITIVE_DIGIT=47, DIGIT=48, ID=49, COMMENT=50, 
@@ -43,14 +43,14 @@ public class JParser extends Parser {
         null, "'('", "')'", "'['", "']'", "'='", "'+'", "'-'", "'*'", "'/'", "','", 
         "'[]'", null, null, "'begin'", "'end'", "'program'", "'function'", "'as'", 
         "'return'", "'break'", "'continue'", "'to'", null, "'if'", "'else'", "'while'", 
-        "'for'", "'step'", "'then'", "'public'", "'var'", "'true'", "'false'", 
+        "'for'", "'step'", "'then'", "'global'", "'var'", "'true'", "'false'", 
         "'typeof'", "'dynamic'", "'import'", "'native'"
     };
     private static final String[] _SYMBOLIC_NAMES = {
         null, null, null, null, null, null, null, null, null, null, null, null, 
         "AND", "OR", "BEGIN", "END", "PROGRAM", "FUNCTION", "AS", "RETURN", "BREAK", 
         "CONTINUE", "TO", "NOT", "IF", "ELSE", "WHILE", "FOR", "STEP", "THEN", 
-        "PUBLIC", "VAR", "TRUE", "FALSE", "TYPEOF", "DYNAMIC", "IMPORT", "NATIVE", 
+        "GLOBAL", "VAR", "TRUE", "FALSE", "TYPEOF", "DYNAMIC", "IMPORT", "NATIVE", 
         "CONST_TYPE", "TYPE", "COMPARE_OP", "CONST_INT", "CONST_NATUAL_NO", "CONST_FLOAT", 
         "CONST_STRING", "CONST_NORMAL_STRING", "CONST_CHAR_STRING", "POSITIVE_DIGIT", 
         "DIGIT", "ID", "COMMENT", "LINE_COMMENT", "WS"
@@ -182,7 +182,7 @@ public class JParser extends Parser {
                 case IF:
                 case WHILE:
                 case FOR:
-                case PUBLIC:
+                case GLOBAL:
                 case VAR:
                 case TYPEOF:
                 case DYNAMIC:
@@ -201,7 +201,7 @@ public class JParser extends Parser {
                 setState(47); 
                 _errHandler.sync(this);
                 _la = _input.LA(1);
-            } while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << FUNCTION) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << IF) | (1L << WHILE) | (1L << FOR) | (1L << PUBLIC) | (1L << VAR) | (1L << TYPEOF) | (1L << DYNAMIC) | (1L << NATIVE) | (1L << CONST_TYPE) | (1L << ID))) != 0) );
+            } while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << FUNCTION) | (1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << IF) | (1L << WHILE) | (1L << FOR) | (1L << GLOBAL) | (1L << VAR) | (1L << TYPEOF) | (1L << DYNAMIC) | (1L << NATIVE) | (1L << CONST_TYPE) | (1L << ID))) != 0) );
             }
         }
         catch (RecognitionException re) {
@@ -526,7 +526,7 @@ public class JParser extends Parser {
             case IF:
             case WHILE:
             case FOR:
-            case PUBLIC:
+            case GLOBAL:
             case VAR:
             case TYPEOF:
             case DYNAMIC:
@@ -548,7 +548,7 @@ public class JParser extends Parser {
                     setState(84); 
                     _errHandler.sync(this);
                     _la = _input.LA(1);
-                } while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << IF) | (1L << WHILE) | (1L << FOR) | (1L << PUBLIC) | (1L << VAR) | (1L << TYPEOF) | (1L << DYNAMIC) | (1L << NATIVE) | (1L << CONST_TYPE) | (1L << ID))) != 0) );
+                } while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RETURN) | (1L << BREAK) | (1L << CONTINUE) | (1L << IF) | (1L << WHILE) | (1L << FOR) | (1L << GLOBAL) | (1L << VAR) | (1L << TYPEOF) | (1L << DYNAMIC) | (1L << NATIVE) | (1L << CONST_TYPE) | (1L << ID))) != 0) );
                 }
                 break;
             case END:
@@ -685,7 +685,7 @@ public class JParser extends Parser {
         }
         public TerminalNode CONST_TYPE() { return getToken(JParser.CONST_TYPE, 0); }
         public TerminalNode VAR() { return getToken(JParser.VAR, 0); }
-        public TerminalNode PUBLIC() { return getToken(JParser.PUBLIC, 0); }
+        public TerminalNode GLOBAL() { return getToken(JParser.GLOBAL, 0); }
         public StatementDeclarationContext(StatementContext ctx) { copyFrom(ctx); }
         @Override
         public void enterRule(ParseTreeListener listener) {
@@ -860,10 +860,10 @@ public class JParser extends Parser {
                 setState(90);
                 _errHandler.sync(this);
                 _la = _input.LA(1);
-                if (_la==PUBLIC) {
+                if (_la==GLOBAL) {
                     {
                     setState(89);
-                    match(PUBLIC);
+                    match(GLOBAL);
                     }
                 }
 
@@ -2033,7 +2033,7 @@ public class JParser extends Parser {
                 case ELSE:
                 case WHILE:
                 case FOR:
-                case PUBLIC:
+                case GLOBAL:
                 case VAR:
                 case TYPEOF:
                 case DYNAMIC:
@@ -2093,7 +2093,7 @@ public class JParser extends Parser {
                 case ELSE:
                 case WHILE:
                 case FOR:
-                case PUBLIC:
+                case GLOBAL:
                 case VAR:
                 case TYPEOF:
                 case DYNAMIC:
@@ -2181,7 +2181,7 @@ public class JParser extends Parser {
             case ELSE:
             case WHILE:
             case FOR:
-            case PUBLIC:
+            case GLOBAL:
             case VAR:
             case TYPEOF:
             case DYNAMIC:
